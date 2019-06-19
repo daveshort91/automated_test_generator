@@ -5,3 +5,4 @@ from page import Page
 
 
 test = Page("google.com")
+test.write()

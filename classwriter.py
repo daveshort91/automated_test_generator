@@ -8,17 +8,33 @@ class ClassWriter:
     def __init__(self, filename):
         self.filename = filename
 
-    def createfile():
-        self.file = open(self.filename, "w+")
+    def createfile(self):
+        self.file = open(self.filename + ".cs", "w+")
 
-    def setfilepath(filepath):
+    def setfilepath(self, filepath):
         self.filepath = filepath
 
-    def writeheader(classname):
-        file.write("public class " + classname + "{\r\n")
+    def writepackages(self):
+        self.file.write("using OpenQA.Selenium;\nusing OpenQA.Selenium.Interactions\r\n\n")
 
-    def writefooter():
-        file.write("}\r\n")
-        file.close()
+    def writeclassheader(self, classname):
+        self.file.write("public class " + classname + "{\r\n\n")
 
-    
+    def writemethodhead(self, name):
+        self.file.write("public IWebElement get" + name + "(){\r\n");
+
+    def writemethodend(self):
+        self.file.write("}\r\n\n")
+
+    def writefindelementbyid(self, id, variable):
+        self.file.write("return Driver.FindElement(By.id(\"" + id + "\"));\r\n")
+
+    def writefindelementbycss(self, selector, variable):
+        self.file.write("return Driver.FindElement(By.cssSelector(\"" + selector + "\"));\r\n")
+
+    def writefindelementbyxpath(self,path, variable):
+        self.file.write("return Driver.FindElement(By.XPath(\"" + path + "\"));\r\n")
+
+    def writefooter(self):
+        self.file.write("}\r\n")
+        self.file.close()
