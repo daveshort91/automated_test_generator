@@ -1,6 +1,8 @@
 import tkinter as tk
+from tkinter.filedialog import askdirectory
 
 class Application(tk.Frame):
+    
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
@@ -18,11 +20,25 @@ class Application(tk.Frame):
                               command=self.master.destroy)
         self.quit.pack(side="bottom")
 
-    def say_hi(self):
-        print("hi there, everyone!")
-
     def class_form(self):
-        print("filler\n")
+        classForm = tk.Toplevel(root)
+        display = tk.Label(classForm, text="New Class Form")
+        display.grid(row=0)
+        classNameLabel = tk.Label(classForm, text="Name")
+        classNameLabel.grid(row=1, column=0)
+        className = tk.Entry(classForm)
+        className.grid(row=1, column=1)
+        fileLocation = tk.Button(classForm, text="Choose Destination")
+        fileLocation["command"] = self.get_directory
+        fileLocation.grid(row=2, column=0)
+        self.directoryPath = tk.Entry(classForm)
+        self.directoryPath.grid(row=2, column=1)
+        
+        
+    def get_directory(self):
+        directoryName = askdirectory()
+        self.directoryPath.insert(0, directoryName)
+
 
 root = tk.Tk()
 app = Application(master=root)
