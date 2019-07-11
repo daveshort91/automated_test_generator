@@ -75,6 +75,6 @@ class Page:
         return results
                 
     
-test = Page('http://ldsp-pay.ldschurch.org', 'test025')
+#test = Page('http://ldsp-pay.ldschurch.org', '/Users/Dave/Documents/Spring 2019/test025')
 
 

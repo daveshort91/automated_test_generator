@@ -21,7 +21,7 @@ class ClassWriter:
         self.file.write("public class " + classname + "{\r\n\n")
 
     def write_method_head(self, name):
-        self.file.write("\tpublic IWebElement get" + name + "(){\r\n");
+        self.file.write("\tpublic IWebElement " + name + "(){\r\n");
 
     def write_method_end(self):
         self.file.write("\t}\r\n\n")
