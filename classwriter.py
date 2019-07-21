@@ -5,30 +5,53 @@ class ClassWriter:
     filename = ""
     filepath = ""
     file = ""
-    def __init__(self, filename):
+    def __init__(self, filename, lang):
         self.filename = filename
+        self.lang = lang
 
     def create_file(self):
-        self.file = open(self.filename + ".cs", "w+")
+        if (self.lang == 1):
+            self.file = open(self.filename + ".cs", "w+")
+        elif (self.lang == 2):
+            self.file = open(self.filename + ".java", "w+")
 
     def set_file_path(self, filepath):
         self.filepath = filepath
 
     def write_packages(self):
-        self.file.write("using OpenQA.Selenium;\nusing OpenQA.Selenium.Interactions\r\n\n")
-
+        if (self.lang == 1):
+            self.file.write("using OpenQA.Selenium;\nusing OpenQA.Selenium.Interactions\r\n\n")
+        elif (self.lang == 2):
+            self.file.write("import org.openqa.selenium.By;\nimport org.openqa.selenium.WebDriver;\nimport org.openqa.selenium.WebElement;\nimport org.openqa.selenium.FindBy;\r\n\n")
+            
     def write_class_header(self, classname):
-        self.file.write("public class " + classname + "{\r\n\n")
+        self.file.write("public class " + classname + " {\r\n\n")
+        if (self.lang == 1):
+            self.file.write("private IWebDriver Driver;\n\n")
+        elif (self.lang == 2):
+            self.file.write("private WebDriver Driver;\n\n")
+    def write_class_constructor(self, classname):
+        if (self.lang == 1):
+            self.file.write("public " + classname + "(IWebDriver driver){\r\n\tDriver = driver;\n}\r\n")
+        elif (self.lang == 2):
+            self.file.write("public " + classname + "(WebDriver driver){\r\n\tDriver = driver;\n}\r\n")
+        
 
     def write_method_head(self, name):
-        self.file.write("\tpublic IWebElement " + name + "(){\r\n");
-
+        if (self.lang == 1):
+            self.file.write("\tpublic IWebElement " + name + "(){\r\n")
+        elif (self.lang == 2):
+            self.file.write("\tpublic WebElement " + name + "(){\r\n")
+            
     def write_method_end(self):
-        self.file.write("\t}\r\n\n")
-
+            self.file.write("\t}\r\n\n")
+            
     def write_find_element_by_id(self, idName):
-        self.file.write("\t\treturn Driver.FindElement(By.id(\"" + idName + "\"));\r\n")
-
+        if (self.lang == 1):
+            self.file.write("\t\treturn Driver.FindElement(By.id(\"" + idName + "\"));\r\n")
+        elif (self.lang == 2):
+            self.file.write("\t\treturn ")
+            
     def write_find(self, name, element):
         self.write_method_head(name)
         self.write_find_element_by_id(element)
@@ -61,5 +84,6 @@ class ClassWriter:
         self.file.write("return Driver.FindElement(By.XPath(\"" + path + "\"));\r\n")
 
     def write_footer(self):
-        self.file.write("}\r\n")
+        self.file.write("}\r\n")       
         self.file.close()
+            

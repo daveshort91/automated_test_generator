@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter.filedialog import askdirectory
+from tkinter import messagebox
 from page import Page
 
 class Application(tk.Frame):
@@ -20,36 +21,50 @@ class Application(tk.Frame):
         self.quit.pack(side="bottom")
 
     def class_form(self):
+        self.v = tk.IntVar()
+        
         self.classForm = tk.Toplevel(root)
         display = tk.Label(self.classForm, text="New Class Form")
         display.grid(row=0)
-        classNameLabel = tk.Label(self.classForm, text="Name")
+        #Name
+        classNameLabel = tk.Label(self.classForm, text="Class Name")
         classNameLabel.grid(row=1, column=0)
         self.className = tk.Entry(self.classForm)
         self.className.grid(row=1, column=1)
+        #File Destination
         fileLocation = tk.Button(self.classForm, text="Choose Destination")
         fileLocation["command"] = self.get_directory
         fileLocation.grid(row=2, column=0)
         self.directoryPath = tk.Entry(self.classForm)
         self.directoryPath.grid(row=2, column=1)
+        #URL fields
         urlLabel = tk.Label(self.classForm, text="URL")
         urlLabel.grid(row=3, column=0)
         self.url = tk.Entry(self.classForm)
         self.url.grid(row=3, column=1)
+        #Language Radio Button
         languageLabel = tk.Label(self.classForm, text="Language")
         languageLabel.grid(row=4,column=0)
+        self.languageCsharp = tk.Radiobutton(self.classForm, text="C#", variable=self.v, value=1).grid(row=4, column=1)
+        self.languageJava = tk.Radiobutton(self.classForm, text="Java", variable=self.v, value=2).grid(row=4, column=2)
+        #Submit Button
         submitButton = tk.Button(self.classForm, text="Submit")
         submitButton["command"] = self.submit_form
-        submitButton.grid(row=4, column=3)
+        submitButton.grid(row=6, column=3)
 
     def submit_form(self):
         className = self.className.get()
         directory = self.directoryPath.get()
+        language = self.v.get()
         fullPath = directory + '/' + className
         url = self.url.get()
-        if (url != "" and className != "" and ):
+        if (url != "" and className != "" and language != 0):
             newClass = Page(url, fullPath)
-        self.classForm.destroy()
+            self.classForm.destroy()
+        else:
+            incompleteFormError = tk.Toplevel(root)
+            
+        
         
         
     def get_directory(self):
