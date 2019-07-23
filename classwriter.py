@@ -27,21 +27,21 @@ class ClassWriter:
     def write_class_header(self, classname):
         self.file.write("public class " + classname + " {\r\n\n")
         if (self.lang == 1):
-            self.file.write("private IWebDriver Driver;\n\n")
+            self.file.write("\tprivate IWebDriver Driver;\n\n")
         elif (self.lang == 2):
-            self.file.write("private WebDriver Driver;\n\n")
+            self.file.write("\tprivate WebDriver driver;\n\n")
+            
     def write_class_constructor(self, classname):
         if (self.lang == 1):
-            self.file.write("public " + classname + "(IWebDriver driver){\r\n\tDriver = driver;\n}\r\n")
+            self.file.write("\tpublic " + classname + "(IWebDriver driver){\r\n\t\tDriver = driver;\n\t}\r\n")
         elif (self.lang == 2):
-            self.file.write("public " + classname + "(WebDriver driver){\r\n\tDriver = driver;\n}\r\n")
+            self.file.write("\tpublic " + classname + "(WebDriver webdriver){\r\n\t\tdriver = webdriver;\n\t}\r\n")
         
-
     def write_method_head(self, name):
         if (self.lang == 1):
-            self.file.write("\tpublic IWebElement " + name + "(){\r\n")
+            self.file.write("\tpublic IWebElement " + name.lower() + "(){\r\n")
         elif (self.lang == 2):
-            self.file.write("\tpublic WebElement " + name + "(){\r\n")
+            self.file.write("\tpublic WebElement " + name.lower() + "(){\r\n")
             
     def write_method_end(self):
             self.file.write("\t}\r\n\n")
@@ -50,7 +50,7 @@ class ClassWriter:
         if (self.lang == 1):
             self.file.write("\t\treturn Driver.FindElement(By.id(\"" + idName + "\"));\r\n")
         elif (self.lang == 2):
-            self.file.write("\t\treturn ")
+            self.file.write("\t\treturn driver.findElement(By.id(\"" + idName + "\"));\r\n")
             
     def write_find(self, name, element):
         self.write_method_head(name)

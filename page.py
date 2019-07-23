@@ -6,18 +6,19 @@ from classwriter import ClassWriter
 
 class Page:
     
-    def __init__(self, url, filename):
+    def __init__(self, url, filename, lang, className):
         self.page = urllib.request.urlopen(url)
         self.siteDoc = BeautifulSoup(self.page, 'html.parser')
-        self.wfile = ClassWriter(filename)
+        self.wfile = ClassWriter(filename, lang)
         self.inputElements = self.siteDoc.find_all('input')
         self.linkElements = self.siteDoc.find_all('a')
-        self.write_class()
+        self.write_class(className)
 
-    def write_class(self):
+    def write_class(self, className):
         self.wfile.create_file()
         self.wfile.write_packages()
-        self.wfile.write_class_header("Test")
+        self.wfile.write_class_header(className)
+        self.wfile.write_class_constructor(className)
         self.get_elements()
         self.wfile.write_footer()
 

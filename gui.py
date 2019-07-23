@@ -52,20 +52,22 @@ class Application(tk.Frame):
         submitButton["command"] = self.submit_form
         submitButton.grid(row=6, column=3)
 
+    def incomplete_form(self):
+        incompleteFormError = tk.Toplevel(root)
+        incompleteLabel = tk.Label(incompleteFormError, text="Fill out all fields before submitting")
+    
     def submit_form(self):
         className = self.className.get()
         directory = self.directoryPath.get()
         language = self.v.get()
-        fullPath = directory + '/' + className
+        fullPath = directory + '/' + className.lower()
         url = self.url.get()
         if (url != "" and className != "" and language != 0):
-            newClass = Page(url, fullPath)
+            newClass = Page(url, fullPath, language, className)
             self.classForm.destroy()
         else:
-            incompleteFormError = tk.Toplevel(root)
+            self.incomplete_form()         
             
-        
-        
         
     def get_directory(self):
         directoryName = askdirectory()
@@ -73,5 +75,6 @@ class Application(tk.Frame):
 
 
 root = tk.Tk()
+root.title("TestMinion")
 app = Application(master=root)
 app.mainloop()
