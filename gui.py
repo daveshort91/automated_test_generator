@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter.filedialog import askdirectory
 from tkinter import messagebox
 from page import Page
+from simpletestwriter import SimpleTestWriter
+
 
 class Application(tk.Frame):
     
@@ -51,11 +53,20 @@ class Application(tk.Frame):
         submitButton = tk.Button(self.classForm, text="Submit")
         submitButton["command"] = self.submit_form
         submitButton.grid(row=6, column=3)
-
-    def incomplete_form(self):
-        incompleteFormError = tk.Toplevel(root)
-        incompleteLabel = tk.Label(incompleteFormError, text="Fill out all fields before submitting")
+        
     
+        
+    def incomplete_form(self):
+        self.incompleteFormError = tk.Toplevel(root)
+        incompleteLabel = tk.Label(self.incompleteFormError, text="Fill out all fields before submitting")
+        incompleteLabel.pack()
+        closeButton = tk.Button(self.incompleteFormError, text="Close",fg="red")
+        closeButton["command"] = self.close_alert
+        closeButton.pack()
+
+    def close_alert(self):
+        self.incompleteFormError.destroy()
+        
     def submit_form(self):
         className = self.className.get()
         directory = self.directoryPath.get()
@@ -64,6 +75,8 @@ class Application(tk.Frame):
         url = self.url.get()
         if (url != "" and className != "" and language != 0):
             newClass = Page(url, fullPath, language, className)
+            if (language == 2):
+                simpleTest = SimpleTestWriter(fullPath, className)  
             self.classForm.destroy()
         else:
             self.incomplete_form()         
