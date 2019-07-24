@@ -10,11 +10,13 @@ class Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
-        self.master.geometry("500x500")
+        self.master.geometry("500x300")
         self.pack()
         self.create_widgets()
 
     def create_widgets(self):
+        instruct = tk.Label(self, text="Click the button to create a new element getter class.\n1. Capitalize the first letter of the class name.\n2. Select a directory within your project to save the class file.\n3. Enter a url with the \"https://\" prefix.\n4. Select a language.\n")
+        instruct.pack()
         self.new_class = tk.Button(self)
         self.new_class["text"] = "New Class"
         self.new_class["command"] = self.class_form
@@ -76,7 +78,7 @@ class Application(tk.Frame):
         if (url != "" and className != "" and language != 0):
             newClass = Page(url, fullPath, language, className)
             if (language == 2):
-                simpleTest = SimpleTestWriter(fullPath, className)  
+                simpleTest = SimpleTestWriter(directory)  
             self.classForm.destroy()
         else:
             self.incomplete_form()         

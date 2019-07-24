@@ -3,27 +3,27 @@ class SimpleTestWriter:
     className = ""
     file = ""
     
-    def __init__(self, fileName, className):
+    def __init__(self, fileName):
         self.fileName = fileName
-        self.className = className
         self.create_file()
         self.write_packages()
-        self.write_class_header(className)
-        self.write_class_constructor(className)
+        self.write_class_header()
+        self.write_class_constructor()
         self.write_class_footer()
         
     def create_file(self):
-        self.file = open(self.fileName + "Test.java", "w+")
+        self.file = open(self.fileName + "/linkTest.java", "w+")
 
     def write_packages(self):
         self.file.write("import java.io.IOException;\nimport java.net.HttpURLConnection;\nimport java.net.MalformedURLException;\nimport java.net.URL;\nimport java.util.Iterator;\nimport java.util.List;\nimport org.openqa.selenium.By;\nimport org.openqa.selenium.WebDriver;\nimport org.openqa.selenium.WebElement;\nimport org.openqa.selenium.chrome.ChromeDriver;\r\n\n")
-        
-    def write_class_header(self, className):
-        self.file.write("public class " + className + "Test {\r\n\n")
+#Selenium code taken from:
+#How to Find All/Broken links using Selenium Webdriver. (n.d.). Retrieved from https://www.guru99.com/find-broken-links-selenium-webdriver.html      
+    def write_class_header(self):
+        self.file.write("public class LinkTest {\r\n\n")
         self.file.write("\tprivate static WebDriver driver = null;\n\n")
 
-    def write_class_constructor(self, className):
-        self.file.write("\tpublic " + className + "(WebDriver webdriver){\r\n\n\t\tdriver = webdriver;\n\n");
+    def write_class_constructor(self):
+        self.file.write("\tpublic LinkTest(WebDriver webdriver){\r\n\n\t\tdriver = webdriver;\n\n");
         self.file.write("\t\tList<WebElement> links = driver.findElements(By.tagName(\"a\"));\n\n");
         self.file.write("\t\tIterator<WebElement> it = links.iterator();\n\n");
         self.file.write("\t\turl = it.next().getAttribute(\"href\");\n\n");
@@ -39,6 +39,5 @@ class SimpleTestWriter:
         self.file.write("}\n")
         self.file.close()
 
-#test = SimpleTestWriter("test11","Test11")
         
         
