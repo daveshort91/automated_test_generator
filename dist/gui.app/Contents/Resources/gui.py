@@ -75,17 +75,11 @@ class Application(tk.Frame):
         language = self.v.get()
         fullPath = directory + '/' + className.lower()
         url = self.url.get()
-        urlPre =""
+        urlPre = url[0:7]
         fChar = ""
-        
-        if (url != ""):
-            urlPre = url[0:8]
-        #print(urlPre)
-        
-        
         if (className != ""):
             fChar = className[0]    
-        if (url != "" and className != "" and language != 0 and directory != "" and urlPre == "https://" and fChar.isupper()):
+        if (url != "" and className != "" and language != 0 and urlPre == "https://" and fChar.isUpper()):
             newClass = Page(url, fullPath, language, className)
             if (language == 2):
                 simpleTest = SimpleTestWriter(directory)  
