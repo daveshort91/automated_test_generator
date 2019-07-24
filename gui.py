@@ -60,7 +60,7 @@ class Application(tk.Frame):
         
     def incomplete_form(self):
         self.incompleteFormError = tk.Toplevel(root)
-        incompleteLabel = tk.Label(self.incompleteFormError, text="Fill out all fields before submitting")
+        incompleteLabel = tk.Label(self.incompleteFormError, text="Review instructions and fill out all fields before submitting")
         incompleteLabel.pack()
         closeButton = tk.Button(self.incompleteFormError, text="Close",fg="red")
         closeButton["command"] = self.close_alert
@@ -75,7 +75,11 @@ class Application(tk.Frame):
         language = self.v.get()
         fullPath = directory + '/' + className.lower()
         url = self.url.get()
-        if (url != "" and className != "" and language != 0):
+        urlPre = url[0:7]
+        fChar = ""
+        if (className != ""):
+            fChar = className[0]    
+        if (url != "" and className != "" and language != 0 and urlPre == "https://" and fChar.isUpper()):
             newClass = Page(url, fullPath, language, className)
             if (language == 2):
                 simpleTest = SimpleTestWriter(directory)  
